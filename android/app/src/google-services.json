@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "373094573681",
+    "project_id": "arshjobs",
+    "storage_bucket": "arshjobs.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:373094573681:android:47ba66e91c8f4bf6a6ddd0",
+        "android_client_info": {
+          "package_name": "co.arshjobs.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "373094573681-pt04ijbmcv3cs4a8gkk508c88rmt1qkb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVYl0dE3Mj37dTkUqNj1S_p9fNCAx3Gb0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "373094573681-pt04ijbmcv3cs4a8gkk508c88rmt1qkb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

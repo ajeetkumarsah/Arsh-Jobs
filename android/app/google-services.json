@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "373094573681",
+    "project_id": "arshjobs",
+    "storage_bucket": "arshjobs.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:373094573681:android:47ba66e91c8f4bf6a6ddd0",
+        "android_client_info": {
+          "package_name": "co.arshjobs.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "373094573681-j2ln8o29uhhe27ij19olq97ubqfb7ekf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.arshjobs.app",
+            "certificate_hash": "dd5e6335e8bf504190964af530752b3d3a91b503"
+          }
+        },
+        {
+          "client_id": "373094573681-pt04ijbmcv3cs4a8gkk508c88rmt1qkb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVYl0dE3Mj37dTkUqNj1S_p9fNCAx3Gb0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "373094573681-pt04ijbmcv3cs4a8gkk508c88rmt1qkb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "373094573681-vocq42g0k2d5u5nf98ovaugib9bfqgoj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.cariera"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
