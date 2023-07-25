@@ -4,6 +4,7 @@ import 'package:cariera/views/blog_view.dart';
 import 'package:cariera/views/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/methods.dart';
@@ -66,7 +67,7 @@ class _MainDrawerState extends State<MainDrawer> {
                           fontSize: fs18,
                           fontWeight: FontWeight.w800,
                         ),
-                      ),
+                      ).translate(),
                       const SizedBox(
                         height: 5.0,
                       ),
@@ -76,7 +77,7 @@ class _MainDrawerState extends State<MainDrawer> {
                           fontSize: 16.0,
                           fontWeight: FontWeight.w400,
                         ),
-                      ),
+                      ).translate(),
                     ],
                   ),
           ),
@@ -99,7 +100,7 @@ class _MainDrawerState extends State<MainDrawer> {
               Icons.business_outlined,
               color: dark,
             ),
-            title: const Text("Companies"),
+            title: const Text("Companies").translate(),
           ),
           ListTile(
             onTap: () {
@@ -114,7 +115,7 @@ class _MainDrawerState extends State<MainDrawer> {
               Icons.assignment_outlined,
               color: dark,
             ),
-            title: const Text("Resumes"),
+            title: const Text("Resumes").translate(),
           ),
           ListTile(
             onTap: () {
@@ -124,7 +125,7 @@ class _MainDrawerState extends State<MainDrawer> {
               Icons.book_outlined,
               color: dark,
             ),
-            title: const Text("Blog"),
+            title: const Text("Blog").translate(),
           ),
           const Divider(
             color: Colors.grey,
@@ -150,7 +151,7 @@ class _MainDrawerState extends State<MainDrawer> {
               userID == null ? Icons.login_outlined : Icons.logout_outlined,
               color: dark,
             ),
-            title: Text(userID == null ? "Login" : "Logout"),
+            title: Text(userID == null ? "Login" : "Logout").translate(),
           ),
           const Divider(
             color: Colors.grey,

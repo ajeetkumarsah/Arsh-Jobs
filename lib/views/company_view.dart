@@ -99,18 +99,16 @@ class CompanyView extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Row(
-                                children: [
-                                  const Icon(
-                                    Icons.pin_drop_rounded,
-                                    color: primary,
-                                    size: 15,
-                                  ),
-                                  Text(
-                                    checkString(job!.location),
-                                    style: s2,
-                                  ).translate()
-                                ],
+                              const Icon(
+                                Icons.pin_drop_rounded,
+                                color: primary,
+                                size: 15,
+                              ),
+                              Flexible(
+                                child: Text(
+                                  checkString(job!.location),
+                                  style: s2,
+                                ).translate(),
                               )
                             ],
                           ),

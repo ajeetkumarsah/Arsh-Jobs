@@ -1,4 +1,3 @@
-
 import 'package:cariera/services/login_service.dart';
 import 'package:cariera/services/register_service.dart';
 import 'package:cariera/utils/methods.dart';
@@ -30,7 +29,8 @@ class RegisterViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future register(String username, String email, String password) async {
+  Future register(
+      String username, String email, String password, String phone) async {
     sp = await SharedPreferences.getInstance();
     loading('Registering..');
     var response = await _registerService.register(

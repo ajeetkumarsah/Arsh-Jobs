@@ -2,6 +2,7 @@ import 'package:cariera/utils/colors.dart';
 import 'package:cariera/widgets/custom_appbar.dart';
 import 'package:cariera/widgets/sb10.dart';
 import 'package:flutter/material.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../utils/constant.dart';
@@ -40,7 +41,7 @@ class _AboutViewState extends State<AboutView> {
             Text(
               AppConstants.version,
               style: grey12,
-            ),
+            ).translate(),
             sbH20(),
             Container(
               padding: const EdgeInsets.only(
@@ -84,7 +85,7 @@ class _AboutViewState extends State<AboutView> {
             Text(
               AppConstants.copyright,
               style: grey12,
-            ),
+            ).translate(),
           ],
         ),
       ),
@@ -113,7 +114,7 @@ Widget aboutTile({icon, required title, url, onTap}) {
               Text(
                 title,
                 style: s15boldark,
-              ),
+              ).translate(),
             ],
           ),
           const Icon(

@@ -23,10 +23,7 @@ class CustomButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(pr), // <-- Radius
               ),
             ),
-            child: Text(
-              title ?? '',
-              style: bts,
-            ).translate(),
+            child: Text(title ?? '', style: bts).translate(),
           ),
         ),
       ],

@@ -4,6 +4,7 @@ import 'package:cariera/widgets/default_pad_lr.dart';
 import 'package:cariera/widgets/rounded_card.dart';
 import 'package:cariera/widgets/sb10.dart';
 import 'package:flutter/material.dart';
+import 'package:google_translator/google_translator.dart';
 
 class HoriTab extends StatelessWidget {
   const HoriTab({Key? key}) : super(key: key);
@@ -20,13 +21,10 @@ class HoriTab extends StatelessWidget {
               Text(
                 'Job Category',
                 style: sbb15,
-              ),
+              ).translate(),
               TextButton(
                   onPressed: () {},
-                  child: Text(
-                    'See all',
-                    style: pb5l11,
-                  ))
+                  child: Text('See all', style: pb5l11).translate())
             ],
           ),
         ),
@@ -52,7 +50,7 @@ class HoriTab extends StatelessWidget {
                           Text(
                             'Design & Art',
                             style: sbw13,
-                          )
+                          ).translate()
                         ],
                       ),
                       color: primary,

@@ -1,3 +1,4 @@
+import 'package:cariera/views/language_screen.dart';
 import 'package:cariera/views/login_view.dart';
 import 'package:cariera/widgets/card.dart';
 import 'package:cariera/utils/colors.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_translator/google_translator.dart';
 import 'package:stacked/stacked.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'about_view.dart';
 import 'account_view.dart';
@@ -34,14 +36,8 @@ class ProfileView extends StatelessWidget {
                       padding: const EdgeInsets.only(left: dp),
                       child: Row(
                         children: [
-                          Text(
-                            'Welcome, ',
-                            style: swb20,
-                          ).translate(),
-                          Text(
-                            model.firstName ?? '', //model.displayName,
-                            style: swp20,
-                          ).translate(),
+                          Text('Welcome, ', style: swb20).translate(),
+                          Text(model.firstName ?? '', style: swp20).translate(),
                         ],
                       ),
                     ),
@@ -120,7 +116,7 @@ class ProfileView extends StatelessWidget {
                     ),
                     ListTile(
                       leading: const Icon(Icons.business_center_outlined),
-                      title: const Text('My Jobs'),
+                      title: const Text('My Jobs').translate(),
                       onTap: () {
                         model.gotoListing(
                             'My Jobs', 'job', AppConstants.myJobs, model.user);
@@ -128,7 +124,7 @@ class ProfileView extends StatelessWidget {
                     ),
                     ListTile(
                       leading: const Icon(Icons.business_outlined),
-                      title: const Text('My Companies'),
+                      title: const Text('My Companies').translate(),
                       onTap: () {
                         model.gotoListing('My Companies', 'company',
                             AppConstants.myCompanies, model.user);
@@ -136,25 +132,29 @@ class ProfileView extends StatelessWidget {
                     ),
                     ListTile(
                       leading: const Icon(Icons.assignment_outlined),
-                      title: const Text('My Resumes'),
-                      onTap: () {
-                        model.gotoListing('My Resumes', 'resume',
-                            AppConstants.myResumes, model.user);
+                      title: const Text('My Resumes').translate(),
+                      onTap: () async {
+                        if (model.user != null) {
+                          final Uri url =
+                              Uri.parse('https://arshjobs.ae/submit-resume/');
+                          if (!await launchUrl(url)) {
+                            throw Exception('Could not launch $url');
+                          }
+                          // model.gotoListing('My Resumes', 'resume',
+                          //     AppConstants.myResumes, model.user);
+                        }
                       },
                     ),
                     ListTile(
                       leading: const Icon(Icons.language),
-                      title: const Text('Change Language'),
+                      title: const Text('Change Language').translate(),
                       onTap: () async {
-                        // String? result = await Get.to(() => AccountView());
-                        // if (result == 'refresh') {
-                        //   model.initSP();
-                        // }
+                        Get.to(() => const LanguageScreen());
                       },
                     ),
                     ListTile(
                       leading: const Icon(Icons.settings),
-                      title: const Text('Account'),
+                      title: const Text('Account').translate(),
                       onTap: () async {
                         String? result = await Get.to(() => AccountView());
                         if (result == 'refresh') {
@@ -164,14 +164,15 @@ class ProfileView extends StatelessWidget {
                     ),
                     ListTile(
                       leading: const Icon(Icons.info_outline),
-                      title: const Text('About'),
+                      title: const Text('About').translate(),
                       onTap: () {
                         Get.to(() => const AboutView());
                       },
                     ),
                     ListTile(
                       leading: const Icon(Icons.logout),
-                      title: Text(model.userID != null ? 'Logout' : 'Login'),
+                      title: Text(model.userID != null ? 'Logout' : 'Login')
+                          .translate(),
                       onTap: () {
                         model.loginLogout();
                       },

@@ -1,4 +1,3 @@
-
 import 'package:cariera/models/blog_model.dart';
 import 'package:cariera/utils/constant.dart';
 import 'package:cariera/utils/methods.dart';
@@ -10,6 +9,7 @@ import 'package:cariera/widgets/rounded_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:stacked/stacked.dart';
 
 import '../widgets/top_appbar_btn.dart';
@@ -64,7 +64,7 @@ class BlogDetailsView extends StatelessWidget {
                         child: Text(
                           blog!.title!,
                           style: sbb15,
-                        ),
+                        ).translate(),
                       ),
                       PaddingWapper(
                           l: defualtPadding * 2,

@@ -1,8 +1,8 @@
-
 import 'package:cariera/utils/colors.dart';
 import 'package:cariera/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_translator/google_translator.dart';
 
 // ignore: must_be_immutable
 class CustomAppBar extends StatelessWidget {
@@ -24,10 +24,7 @@ class CustomAppBar extends StatelessWidget {
     return AppBar(
       elevation: elevation,
       centerTitle: centerTitle,
-      title: Text(
-        title!,
-        style: appBarStyle,
-      ),
+      title: Text(title ?? '', style: appBarStyle).translate(),
       backgroundColor: bg,
       leading: IconButton(
           onPressed: () {

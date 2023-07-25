@@ -91,7 +91,7 @@ class JobFilter extends StatelessWidget {
                                 style: swp20)
                           ],
                         ),
-                      ).translate(),
+                      ),
                       IconButton(
                           onPressed: () {
                             if (model.isFilter) {

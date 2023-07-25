@@ -1,7 +1,7 @@
-
 import 'package:cariera/utils/colors.dart';
 import 'package:cariera/utils/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:google_translator/google_translator.dart';
 
 // ignore: must_be_immutable
 class DateDesign extends StatelessWidget {
@@ -19,7 +19,7 @@ class DateDesign extends StatelessWidget {
         const SizedBox(
           width: 10,
         ),
-        Text(date!)
+        Text(date ?? '').translate(),
       ],
     );
   }

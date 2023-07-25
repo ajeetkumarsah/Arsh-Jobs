@@ -1,8 +1,8 @@
-
 import 'package:cariera/views/blog_details_view.dart';
 import 'package:cariera/widgets/rounded_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_translator/google_translator.dart';
 import '../models/blog_model.dart';
 import '../utils/colors.dart';
 import '../utils/constant.dart';
@@ -58,7 +58,7 @@ class BlogsListing extends StatelessWidget {
                               checkString(blog![index].title),
                               overflow: TextOverflow.ellipsis,
                               style: sbb15,
-                            ),
+                            ).translate(),
                             sbH10(),
                             DateDesign(date: date(blog![index].date)),
                           ],

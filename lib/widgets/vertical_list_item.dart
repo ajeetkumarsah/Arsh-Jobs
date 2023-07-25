@@ -69,7 +69,7 @@ class VerticalListItem extends StatelessWidget {
                         size: fs13,
                       ),
                       Expanded(
-                        child: Text(checkString(jobs!.location),
+                        child: Text(checkString(jobs?.location),
                                 overflow: TextOverflow.ellipsis, style: gb5l11)
                             .translate(),
                       ),

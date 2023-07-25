@@ -72,7 +72,7 @@ class JobListing extends StatelessWidget {
                         text: 'Perfect ${checkPerfect(type)}', style: swp20)
                   ],
                 ),
-              ).translate(),
+              ),
               sbH10(),
               searchFilterField(
                 controller: model.searchQueryController,

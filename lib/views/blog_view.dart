@@ -8,6 +8,7 @@ import 'package:cariera/widgets/search_field.dart';
 import 'package:cariera/widgets/verticalShimmerList.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:stacked/stacked.dart';
 
@@ -49,7 +50,7 @@ class BlogView extends StatelessWidget {
                       Text(
                         'Blog',
                         style: swb20,
-                      ),
+                      ).translate(),
                       IconButton(
                           onPressed: () {},
                           icon: const Icon(
@@ -96,8 +97,8 @@ class BlogView extends StatelessWidget {
   Widget search(model) {
     List data = model.searchResult;
     return data.isEmpty
-        ? const Center(
-            child: Text('No Result Found!'),
+        ? Center(
+            child: Text('No Result Found!').translate(),
           )
         : ListView.builder(
             itemCount: data.length,
@@ -111,7 +112,7 @@ class BlogView extends StatelessWidget {
                   Icons.search,
                   color: primary,
                 ),
-                title: Text(data[index]['title']),
+                title: Text(data[index]['title']).translate(),
               );
             });
   }

@@ -1,6 +1,6 @@
-
 import 'package:cariera/widgets/popup_menu.dart';
 import 'package:flutter/material.dart';
+import 'package:google_translator/google_translator.dart';
 
 import '../models/job_model.dart';
 import '../utils/colors.dart';
@@ -55,7 +55,7 @@ class MyListingItem extends StatelessWidget {
                     Text(
                       checkString(jobs!.companyName),
                       style: grey12,
-                    ),
+                    ).translate(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -64,7 +64,7 @@ class MyListingItem extends StatelessWidget {
                           checkString(jobs!.title),
                           overflow: TextOverflow.ellipsis,
                           style: sbb15,
-                        ),
+                        ).translate(),
                       ),
                       PopupMenu(
                           jobModel: jobs, type: type, model: model, url: url)

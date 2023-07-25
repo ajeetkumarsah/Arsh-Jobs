@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:google_translator/google_translator.dart';
 
 import '../utils/constant.dart';
 import 'icon_background.dart';
@@ -40,10 +40,7 @@ class TopAppbarBtn extends StatelessWidget {
               : const SizedBox(
                   width: 10,
                 ),
-          Text(
-            title!,
-            style: textStyle,
-          ),
+          Text(title!, style: textStyle).translate(),
           rightIcon != null
               ? IconBackground(
                   onTap: () {

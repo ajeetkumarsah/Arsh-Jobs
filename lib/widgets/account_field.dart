@@ -1,6 +1,6 @@
-
 import 'package:cariera/widgets/rounded_textfield_simple.dart';
 import 'package:flutter/material.dart';
+import 'package:google_translator/google_translator.dart';
 
 import '../utils/constant.dart';
 
@@ -15,10 +15,7 @@ class AccountField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title!,
-          style: grey15,
-        ),
+        Text(title!, style: grey15).translate(),
         RoundedTextfieldSimple(
           hint: hint,
           controller: controller,

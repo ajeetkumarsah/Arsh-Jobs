@@ -1,5 +1,6 @@
 import 'package:cariera/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:google_translator/google_translator.dart';
 
 import '../utils/constant.dart';
 
@@ -35,7 +36,7 @@ class BigRoundedButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(radius!),
             ),
           ),
-          child: Text(title!),
+          child: Text(title ?? '').translate(),
         ),
       ),
     );

@@ -34,9 +34,9 @@ class AppConstants {
 
 //WEBVIEW URLS
 
-  static const String informationURL = 'https://gnodesign.com';
-  static const String supportEmail = 'support@gnodesign.com';
-  static const String privacyURL = 'https://gnodesign.com';
+  static const String informationURL = 'https://arshjobs.ae/';
+  static const String supportEmail = 'info@arshjobs.ae';
+  static const String privacyURL = 'https://arshjobs.ae/pages/privacy-policy/';
 
   //FEATURE LISTING
   static const String featuredJobs =
@@ -115,6 +115,8 @@ class AppConstants {
   static const String role = 'role';
   static const String displayName = 'display_name';
   static const String userImage = 'user_avatar';
+  static const String COUNTRY_CODE = 'country_code';
+  static const String LANGUAGE_CODE = 'language_code';
 
   //MAP SETTING
   static const double zoom = 15.0;

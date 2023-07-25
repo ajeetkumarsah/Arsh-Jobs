@@ -7,6 +7,7 @@ import 'package:cariera/widgets/shimmer.dart';
 import 'package:cariera/widgets/verticalShimmerList.dart';
 import 'package:cariera/widgets/vertical_list.dart';
 import 'package:flutter/material.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../utils/methods.dart';
@@ -57,9 +58,7 @@ class SeeAllListing extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Hey, ${model.username ?? ''}',
-              ),
+              Text('Hey, ${model.username ?? ''}').translate(),
               RichText(
                   text: TextSpan(children: [
                 TextSpan(text: 'Find Your ', style: swb20),
@@ -125,7 +124,7 @@ class SeeAllListing extends StatelessWidget {
               //     ? 'Fea ${checkListingTitle(type)}'
               'Featured ${checkListingTitle(type)}',
               style: sbb15,
-            ),
+            ).translate(),
           ],
         )),
         VerticalList(

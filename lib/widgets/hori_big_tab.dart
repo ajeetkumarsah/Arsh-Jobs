@@ -8,6 +8,7 @@ import 'package:cariera/widgets/rounded_card.dart';
 import 'package:cariera/widgets/sb10.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_translator/google_translator.dart';
 
 import 'custom_scaffold_listing.dart';
 import 'default_pad_lr.dart';
@@ -41,61 +42,59 @@ class HoriBigTab extends StatelessWidget {
               Text(
                 '$title ${checkListingTitle(type)}',
                 style: sbb15,
-              ),
+              ).translate(),
               TextButton(
-                  onPressed: () {
-                    String title = '', url = '', search = '';
-                    if (type == 'company') {
-                      title = 'Companies';
-                      url = AppConstants.companies;
-                      search = AppConstants.searchCompanies;
-                    } else if (type == 'resume') {
-                      title = 'Resumes';
-                      url = AppConstants.resumes;
-                      search = AppConstants.searchResumes;
-                    } else {
-                      title = 'Jobs';
-                      url = AppConstants.jobs;
-                      search = AppConstants.searchJobs;
-                    }
-                    if (isComplete) {
-                      Get.to(() => DrawerCustomScaffold(
-                            type: 'company',
-                            url: AppConstants.companies,
-                            search: AppConstants.searchCompanies,
-                            title: 'Companies',
-                          ));
-                    } else {
-                      Get.to(() => CustomScaffold(
-                            seeAll: true,
-                            type: type,
-                            url: url,
-                            search: search,
-                            isFav: isFav,
-                            title: title,
-                          ));
-                    }
+                onPressed: () {
+                  String title = '', url = '', search = '';
+                  if (type == 'company') {
+                    title = 'Companies';
+                    url = AppConstants.companies;
+                    search = AppConstants.searchCompanies;
+                  } else if (type == 'resume') {
+                    title = 'Resumes';
+                    url = AppConstants.resumes;
+                    search = AppConstants.searchResumes;
+                  } else {
+                    title = 'Jobs';
+                    url = AppConstants.jobs;
+                    search = AppConstants.searchJobs;
+                  }
+                  if (isComplete) {
+                    Get.to(() => DrawerCustomScaffold(
+                          type: 'company',
+                          url: AppConstants.companies,
+                          search: AppConstants.searchCompanies,
+                          title: 'Companies',
+                        ));
+                  } else {
+                    Get.to(() => CustomScaffold(
+                          seeAll: true,
+                          type: type,
+                          url: url,
+                          search: search,
+                          isFav: isFav,
+                          title: title,
+                        ));
+                  }
 
-                    // Get.to(() => FeaturedUnfeaturedJobsView(
-                    //       type: type,
-                    //       listType: listType,
-                    //       url: checkListingFeaturedAPI(type, listType),
-                    //       title:
-                    //           '${listTypeCheck(listType)} ${checkListingTitle(type)}',
-                    //     ));
-                  },
-                  child: Text(
-                    'See all',
-                    style: pb5l11,
-                  ))
+                  // Get.to(() => FeaturedUnfeaturedJobsView(
+                  //       type: type,
+                  //       listType: listType,
+                  //       url: checkListingFeaturedAPI(type, listType),
+                  //       title:
+                  //           '${listTypeCheck(listType)} ${checkListingTitle(type)}',
+                  //     ));
+                },
+                child: Text('See all', style: pb5l11).translate(),
+              )
             ],
           ),
         ),
         sbH10(),
         jobs!.isEmpty
             ? Center(
-                child:
-                    Text('No Featured ${checkListingTitle(type)} Available!'),
+                child: Text('No Featured ${checkListingTitle(type)} Available!')
+                    .translate(),
               )
             : Container(
                 height: 210,
@@ -157,14 +156,17 @@ class HoriBigTab extends StatelessWidget {
                                 type != null
                                     ? sbH20()
                                     : Text(
-                                        checkString(jobs![index].companyName),
-                                        style: wb5l11),
+                                            checkString(
+                                                jobs![index].companyName),
+                                            style: wb5l11)
+                                        .translate(),
                                 Text(
-                                    checkString(
-                                      jobs![index].title,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                    style: sww15),
+                                        checkString(
+                                          jobs![index].title,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                        style: sww15)
+                                    .translate(),
                                 Row(
                                   children: [
                                     const Icon(
@@ -174,9 +176,11 @@ class HoriBigTab extends StatelessWidget {
                                     ),
                                     Expanded(
                                       child: Text(
-                                          checkString(jobs![index].location),
-                                          overflow: TextOverflow.ellipsis,
-                                          style: wb5l11),
+                                              checkString(
+                                                  jobs![index].location),
+                                              overflow: TextOverflow.ellipsis,
+                                              style: wb5l11)
+                                          .translate(),
                                     ),
                                   ],
                                 ),
@@ -186,11 +190,11 @@ class HoriBigTab extends StatelessWidget {
                                         ? Text(
                                             checkReumeRate(jobs![index])!,
                                             style: sww15,
-                                          )
+                                          ).translate()
                                         : Text(
                                             checkSalaryRate(jobs![index])!,
                                             style: sww15,
-                                          ),
+                                          ).translate(),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -231,6 +235,8 @@ class HoriBigTab extends StatelessWidget {
 
   Widget category(String? cat) {
     return RoundedCard(
-        pd: p5, color: bt1, child: Text(checkString(cat), style: wb7l11));
+        pd: p5,
+        color: bt1,
+        child: Text(checkString(cat), style: wb7l11).translate());
   }
 }

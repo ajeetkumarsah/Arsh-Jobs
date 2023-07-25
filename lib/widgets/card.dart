@@ -46,10 +46,7 @@ class CustomCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(count ?? '', style: swb50).translate(),
-          Text(
-            title!,
-            style: swb,
-          ).translate(),
+          Text(title!, style: swb).translate(),
         ],
       ),
     );

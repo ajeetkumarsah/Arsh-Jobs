@@ -1,6 +1,7 @@
 import 'package:cariera/models/blog_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_translator/google_translator.dart';
 
 import '../utils/constant.dart';
 import '../utils/methods.dart';
@@ -36,7 +37,7 @@ class ListingTitle extends StatelessWidget {
           Text(
             full ?? '$start ${checkListingTitle(type)}',
             style: sbb15,
-          ),
+          ).translate(),
           isSeelAll
               ? TextButton(
                   onPressed: () {
@@ -77,7 +78,7 @@ class ListingTitle extends StatelessWidget {
                   child: Text(
                     'See all',
                     style: pb5l11,
-                  ))
+                  ).translate())
               : Container()
         ],
       ),

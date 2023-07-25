@@ -96,7 +96,7 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
                 const Text(
                   AppConstants.version,
                   style: TextStyle(color: Colors.black87),
-                )
+                ).translate(),
               ],
             ),
           ),

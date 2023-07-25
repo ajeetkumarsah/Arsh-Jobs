@@ -18,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:google_translator/google_translator.dart';
+import 'package:html/dom.dart' as dom;
 import 'package:stacked/stacked.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -117,18 +118,16 @@ class DetailsView extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.pin_drop_rounded,
-                          color: primary,
-                          size: 15,
-                        ),
-                        Text(
-                          checkString(job?.location),
-                          style: s2,
-                        ).translate()
-                      ],
+                    const Icon(
+                      Icons.pin_drop_rounded,
+                      color: primary,
+                      size: 15,
+                    ),
+                    Flexible(
+                      child: Text(
+                        checkString(job?.location),
+                        style: s2,
+                      ).translate(),
                     )
                   ],
                 ),
@@ -190,11 +189,11 @@ class DetailsView extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 radius: defualtRadius * 1.5,
                 child: GoogleMapScreen(
-                  lat: job!.lat,
-                  long: job!.long,
+                  lat: job?.lat,
+                  long: job?.long,
                   image: null,
-                  title: job!.title,
-                  description: job!.location,
+                  title: job?.title,
+                  description: job?.location,
                 )),
           )
         : Container();
@@ -266,6 +265,14 @@ class DetailsView extends StatelessWidget {
           'html': Style(textAlign: TextAlign.justify),
         },
         data: checkString(job!.content),
+        onLinkTap: (String? url, RenderContext context,
+            Map<String, String> attributes, dom.Element? element) async {
+          //open URL in webview, or launch URL in browser, or any other logic here
+          final Uri _url = Uri.parse(url ?? '');
+          if (!await launchUrl(_url)) {
+            throw Exception('Could not launch $_url');
+          }
+        },
       ),
     );
   }

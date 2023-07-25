@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:google_translator/google_translator.dart';
 
 class ScrollUp extends StatelessWidget {
   const ScrollUp({
@@ -13,13 +13,13 @@ class ScrollUp extends StatelessWidget {
         alignment: Alignment.bottomCenter,
         width: double.infinity,
         height: 50,
-        child: const Center(
-          child: Text(
+        child: Center(
+          child: const Text(
             "Click to scroll up",
             style: TextStyle(
               fontSize: 18,
             ),
-          ),
+          ).translate(),
         ),
       ),
     );

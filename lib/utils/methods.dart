@@ -1,4 +1,3 @@
-
 import 'package:cariera/models/job_model.dart';
 import 'package:cariera/utils/constant.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -300,8 +300,8 @@ dialog(context, title, subTitle,
   showDialog(
       context: context,
       builder: (BuildContext context) => CupertinoAlertDialog(
-            title: Text(title),
-            content: Text(subTitle),
+            title: Text(title).translate(),
+            content: Text(subTitle).translate(),
             actions: <Widget>[
               GestureDetector(
                 onTap: () {
@@ -321,7 +321,7 @@ dialog(context, title, subTitle,
                         buttonText,
                         style: const TextStyle(
                             color: Colors.redAccent, fontSize: 13),
-                      ),
+                      ).translate(),
                     ],
                   ),
                 ),

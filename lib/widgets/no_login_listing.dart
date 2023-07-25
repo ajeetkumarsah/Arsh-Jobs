@@ -2,6 +2,7 @@ import 'package:cariera/utils/colors.dart';
 import 'package:cariera/utils/constant.dart';
 import 'package:cariera/widgets/custom_appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:google_translator/google_translator.dart';
 
 import '../utils/methods.dart';
 import 'rounded_card.dart';
@@ -34,7 +35,7 @@ class NoLoginListing extends StatelessWidget {
             child: RoundedCard(
               color: bg,
               pd: 20,
-              child: Text(status),
+              child: Text(status).translate(),
             ),
           )
         ],

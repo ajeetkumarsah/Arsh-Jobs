@@ -1,5 +1,3 @@
-
-
 import 'package:cariera/utils/methods.dart';
 import 'package:cariera/widgets/custom_button.dart';
 import 'package:cariera/widgets/custom_textfield.dart';
@@ -10,6 +8,7 @@ import 'package:cariera/utils/constant.dart';
 import 'package:cariera/view_model/register_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:stacked/stacked.dart';
 
 import '../widgets/custom_password_textfield.dart';
@@ -19,6 +18,7 @@ class RegisterView extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController usernameController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
 
   RegisterView({Key? key, this.isBack = false}) : super(key: key);
   bool agree = false;
@@ -29,7 +29,7 @@ class RegisterView extends StatelessWidget {
 
     return ViewModelBuilder.reactive(
         viewModelBuilder: () => RegisterViewModel(),
-        builder: (context, dynamic model, child) {
+        builder: (context, RegisterViewModel model, child) {
           return Scaffold(
               resizeToAvoidBottomInset: false,
               body: SafeArea(
@@ -67,7 +67,7 @@ class RegisterView extends StatelessWidget {
                         Text(
                           'Sign up',
                           style: s1,
-                        ),
+                        ).translate(),
                         SizedBox(
                           height: size.height * 0.03,
                         ),
@@ -126,6 +126,16 @@ class RegisterView extends StatelessWidget {
                         SizedBox(
                           height: size.height * 0.02,
                         ),
+                        CustomTextField(
+                          controller: phoneController,
+                          hint: 'Phone',
+                          obscureText: false,
+                          prefix: Icons.phone,
+                          type: TextInputType.phone,
+                        ),
+                        SizedBox(
+                          height: size.height * 0.02,
+                        ),
                         CustomPasswordTextField(
                           controller: passwordController,
                           hint: 'Password',
@@ -161,6 +171,7 @@ class RegisterView extends StatelessWidget {
                                   usernameController.text,
                                   emailController.text,
                                   passwordController.text,
+                                  phoneController.text,
                                 );
                               }
                             }
