@@ -1,4 +1,5 @@
 import 'package:cariera/utils/constant.dart';
+import 'package:cariera/views/language_screen.dart';
 import 'package:cariera/views/login_view.dart';
 import 'package:cariera/widgets/sb10.dart';
 import 'package:flutter/material.dart';
@@ -47,10 +48,15 @@ class _SplashViewState extends State<SplashView> with TickerProviderStateMixin {
   initSP() async {
     sp = await SharedPreferences.getInstance();
     String? token = sp?.getString(AppConstants.authToken);
+    bool? isFirst = sp?.getBool(AppConstants.isFirst);
     if (token != null) {
       Get.offAll(() => DashboardView());
     } else {
       Get.offAll(() => LoginView());
+    }
+    if (isFirst == null || !isFirst) {
+      sp?.setBool(AppConstants.isFirst, true);
+      Get.to(() => const LanguageScreen(isSkipable: true));
     }
   }
 

@@ -21,7 +21,7 @@ class JobsView extends StatelessWidget {
 
           model.getJobTypes(type);
         },
-        builder: (context, dynamic model, child) {
+        builder: (context, JobsViewModel model, child) {
           return WillPopScope(
               onWillPop: () {
                 if (model.isFilter) {
@@ -48,14 +48,14 @@ class JobsView extends StatelessWidget {
         unFeatured: model.searchUnFeaturedJobs);
   }
 
-  Widget jobs(model) {
+  Widget jobs(JobsViewModel model) {
     return model.isFilter
         ? JobFilter(
             type: type,
             model: model,
             url: url,
-            types: model.jobTypes,
-            categories: model.categories)
+            types: model.jobTypes ?? [],
+            categories: model.categories ?? [])
         : JobListing(
             url: url,
             isFav: true,

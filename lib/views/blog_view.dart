@@ -1,3 +1,4 @@
+import 'package:cariera/controller/app_controller.dart';
 import 'package:cariera/models/blog_model.dart';
 import 'package:cariera/utils/colors.dart';
 import 'package:cariera/utils/constant.dart';
@@ -25,71 +26,88 @@ class BlogView extends StatelessWidget {
           model.initialise();
         },
         builder: (context, dynamic model, child) {
-          return Scaffold(
-            backgroundColor: bg,
-            appBar: AppBar(
-              automaticallyImplyLeading: false,
-              toolbarHeight: 150,
-              elevation: 0,
-              backgroundColor: bg,
-              centerTitle: true,
-              title: Column(
-                children: [
-                  sbH10(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          return GetBuilder<AppController>(
+            init: AppController(sharedPreferences: Get.find()),
+            builder: (ctlr) {
+              return Scaffold(
+                backgroundColor: bg,
+                appBar: AppBar(
+                  automaticallyImplyLeading: false,
+                  toolbarHeight: 150,
+                  elevation: 0,
+                  backgroundColor: bg,
+                  centerTitle: true,
+                  title: Column(
                     children: [
-                      IconButton(
-                          onPressed: () {
-                            Get.back();
-                          },
-                          icon: const Icon(
-                            Icons.arrow_back_ios,
-                            color: dark,
-                          )),
-                      Text(
-                        'Blog',
-                        style: swb20,
-                      ).translate(),
-                      IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.arrow_back_ios,
-                            color: bg,
-                          ))
+                      sbH10(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                Get.back();
+                              },
+                              icon: const Icon(
+                                Icons.arrow_back_ios,
+                                color: dark,
+                              )),
+                          Text(
+                            'Blog',
+                            style: swb20,
+                          ).translate(),
+                          IconButton(
+                              onPressed: () {},
+                              icon: const Icon(
+                                Icons.arrow_back_ios,
+                                color: bg,
+                              ))
+                        ],
+                      ),
+                      sbH20(),
+                      searchTextField(
+                        controller: model.searchQueryController,
+                        hint: ctlr.locale.languageCode.startsWith('ar')
+                            ? 'يبحث'
+                            : ctlr.locale.languageCode.startsWith('hi')
+                                ? 'खोज'
+                                : ctlr.locale.languageCode.startsWith('bn')
+                                    ? 'অনুসন্ধান করুন'
+                                    : ctlr.locale.languageCode.startsWith('ur')
+                                        ? 'تلاش کریں۔'
+                                        : ctlr.locale.languageCode
+                                                .startsWith('mr')
+                                            ? 'शोधा'
+                                            : 'Search',
+                        obscureText: false,
+                        sufix: Icons.search,
+                        type: TextInputType.text,
+                      ),
                     ],
                   ),
-                  sbH20(),
-                  searchTextField(
-                    controller: model.searchQueryController,
-                    hint: 'Search',
-                    obscureText: false,
-                    sufix: Icons.search,
-                    type: TextInputType.text,
-                  ),
-                ],
-              ),
-            ),
-            body: model.isloading
-                ? const VerticalShimmerList()
-                : SmartRefresher(
-                    enablePullDown: true,
-                    enablePullUp: true,
-                    header: const WaterDropHeader(),
-                    physics: const BouncingScrollPhysics(),
-                    footer: const ClassicFooter(
-                        // loadStyle: LoadStyle.ShowWhenLoading,
-                        loadingText: AppConstants.loadPosts,
-                        noDataText: AppConstants.noPosts,
-                        canLoadingText: AppConstants.loading),
-                    controller: model.getRefresh,
-                    child: BlogsListing(
-                      blog: model.isSearch ? model.searchResult : model.blog,
-                      model: model,
-                    ),
-                    onRefresh: () => model.onRefresh(),
-                    onLoading: () => model.onLoading(),
-                  ),
+                ),
+                body: model.isloading
+                    ? const VerticalShimmerList()
+                    : SmartRefresher(
+                        enablePullDown: true,
+                        enablePullUp: true,
+                        header: const WaterDropHeader(),
+                        physics: const BouncingScrollPhysics(),
+                        footer: const ClassicFooter(
+                            // loadStyle: LoadStyle.ShowWhenLoading,
+                            loadingText: AppConstants.loadPosts,
+                            noDataText: AppConstants.noPosts,
+                            canLoadingText: AppConstants.loading),
+                        controller: model.getRefresh,
+                        child: BlogsListing(
+                          blog:
+                              model.isSearch ? model.searchResult : model.blog,
+                          model: model,
+                        ),
+                        onRefresh: () => model.onRefresh(),
+                        onLoading: () => model.onLoading(),
+                      ),
+              );
+            },
           );
         });
   }

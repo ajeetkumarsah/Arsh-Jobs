@@ -65,7 +65,12 @@ class DashboardView extends StatelessWidget {
                 ),
               ),
               backgroundColor: bg,
-              body: SafeArea(child: tabs[model.index]),
+              body: SafeArea(
+                child: IndexedStack(
+                  index: model.index,
+                  children: tabs,
+                ),
+              ),
               bottomNavigationBar: BottomNavigationBar(
                   currentIndex: model.index,
                   backgroundColor: Colors.white,

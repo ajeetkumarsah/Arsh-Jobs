@@ -8,6 +8,7 @@ import 'package:cariera/widgets/shimmer.dart';
 import 'package:cariera/widgets/verticalShimmerList.dart';
 import 'package:cariera/widgets/vertical_list.dart';
 import 'package:flutter/material.dart';
+import 'package:google_translator/google_translator.dart';
 import 'package:stacked/stacked.dart';
 import '../view_model/dashboard_view_model.dart';
 import '../widgets/hori_big_tab.dart';
@@ -20,34 +21,44 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
         viewModelBuilder: () => DashboardViewModel(),
-        onViewModelReady: (dynamic model) {
+        onViewModelReady: (DashboardViewModel model) {
           model.getListings(
               AppConstants.jobs, AppConstants.companies, AppConstants.resumes);
         },
-        builder: (context, dynamic model, child) {
+        builder: (context, DashboardViewModel model, child) {
           return SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
                 sbH20(),
-                RichText(
-                    text: TextSpan(children: [
-                  TextSpan(text: 'Find Your ', style: swb25),
-                  TextSpan(text: 'Dream Job', style: swp25)
-                ])),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Flexible(
+                        child: Text('Find Your ', style: swb25).translate()),
+                    sbW10(),
+                    Flexible(
+                        child: Text('Dream Job ', style: swp25).translate())
+                  ],
+                ),
+                // RichText(
+                //     text: TextSpan(children: [
+                //   TextSpan(text: 'Find Your ', style: swb25),
+                //   TextSpan(text: 'Dream Job', style: swp25)
+                // ])),
                 sbH20(),
                 PadLR(
                   child: TwinTabButton(
-                    left: model.unFeatureButton,
-                    right: model.featureButton,
+                    right: model.unFeatureButton,
+                    left: model.featureButton,
                     leftPress: () {
-                      model.isCheck(false, true);
-                    },
-                    rightPress: () {
                       model.isCheck(true, false);
                     },
-                    leftTitle: 'Latest Jobs',
-                    rightTitle: 'Featured Jobs',
+                    rightPress: () {
+                      model.isCheck(false, true);
+                    },
+                    rightTitle: 'Latest Jobs',
+                    leftTitle: 'Featured Jobs',
                   ),
                 ),
                 jobs(model),
@@ -98,7 +109,7 @@ class Home extends StatelessWidget {
                       )
                     : BlogsListing(
                         limit: setLimit(model.blog, 3),
-                        blog: model?.blog!,
+                        blog: model.blog!,
                         model: model,
                       )
               ],

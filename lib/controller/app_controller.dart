@@ -24,19 +24,46 @@ class AppController extends GetxController {
   int get selectedIndex => _selectedIndex;
   List<LanguageModel> staticLanguages = [
     LanguageModel(
-        languageName: 'English', countryCode: 'US', languageCode: 'en'),
-    LanguageModel(languageName: 'عربى', countryCode: 'SA', languageCode: 'ar'),
-    LanguageModel(languageName: 'हिंदी', countryCode: 'IN', languageCode: 'hi'),
+        flag: 'US',
+        languageName: 'English',
+        countryCode: 'US',
+        languageCode: 'en'),
     LanguageModel(
-        languageName: 'বাংলা', countryCode: 'BGD', languageCode: 'bn'),
-    LanguageModel(languageName: 'اردو', countryCode: 'URD', languageCode: 'ur'),
+      flag: 'SA',
+      languageName: 'عربى',
+      countryCode: 'SA',
+      languageCode: 'ar',
+    ),
+    LanguageModel(
+      flag: 'IN',
+      languageName: 'हिंदी',
+      countryCode: 'IN',
+      languageCode: 'hi',
+    ),
+    LanguageModel(
+        flag: 'BD',
+        languageName: 'বাংলা',
+        countryCode: 'BGD',
+        languageCode: 'bn'),
+    // LanguageModel(
+    //   flag: '🇵🇰',
+    //   languageName: 'اردو',
+    //   countryCode: 'URD',
+    //   languageCode: 'ur',
+    // ),
+    LanguageModel(
+      flag: 'MR',
+      languageName: 'मराठी',
+      countryCode: 'MAR',
+      languageCode: 'mr',
+    ),
   ];
 
   void saveLanguage(Locale locale) async {
     sharedPreferences.setString(
         AppConstants.LANGUAGE_CODE, locale.languageCode);
     sharedPreferences.setString(
-        AppConstants.COUNTRY_CODE, locale.countryCode ?? '91');
+        AppConstants.COUNTRY_CODE, locale.countryCode ?? 'US');
   }
 
   void loadCurrentLanguage() async {

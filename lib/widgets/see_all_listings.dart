@@ -59,11 +59,21 @@ class SeeAllListing extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('Hey, ${model.username ?? ''}').translate(),
-              RichText(
-                  text: TextSpan(children: [
-                TextSpan(text: 'Find Your ', style: swb20),
-                TextSpan(text: 'Perfect ${checkPerfect(type)}', style: swp20)
-              ])),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Flexible(child: Text('Find Your ', style: swb20).translate()),
+                  sbW10(),
+                  Flexible(
+                      child: Text('Perfect ${checkPerfect(type)}', style: swp20)
+                          .translate())
+                ],
+              ),
+              // RichText(
+              //     text: TextSpan(children: [
+              //   TextSpan(text: 'Find Your ', style: swb20),
+              //   TextSpan(text: 'Perfect ${checkPerfect(type)}', style: swp20)
+              // ])),
               // sbH10(),
               // searchFilterField(
               //   controller: model.searchQueryController,

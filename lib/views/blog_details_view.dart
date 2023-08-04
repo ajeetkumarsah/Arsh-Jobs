@@ -77,14 +77,15 @@ class BlogDetailsView extends StatelessWidget {
                           child: ListView(
                         children: [
                           PaddingWapper(
-                              l: defualtPadding * 2,
-                              r: defualtPadding * 2,
-                              child: Html(
-                                style: {
-                                  'html': Style(textAlign: TextAlign.justify),
-                                },
-                                data: blog!.content,
-                              ))
+                            l: defualtPadding * 2,
+                            r: defualtPadding * 2,
+                            child: Html(
+                              style: {
+                                'html': Style(textAlign: TextAlign.justify),
+                              },
+                              data: blog!.content,
+                            ),
+                          ),
                         ],
                       ))
                     ],

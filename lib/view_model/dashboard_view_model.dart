@@ -31,13 +31,13 @@ class DashboardViewModel extends BaseViewModel {
   List<BlogModel>? _blogs;
   List<BlogModel>? get blog => _blogs;
 
-  bool featureButton = false, unFeatureButton = true, _isLoading = false;
+  bool featureButton = true, unFeatureButton = false, _isLoading = false;
 
   bool get isLoading => _isLoading;
 
   String? _userID;
   String? get userID => _userID;
-  String? _firstName;
+  String? _firstName, _role;
   String? get firstName => _firstName;
   late SharedPreferences sp;
 
@@ -105,6 +105,14 @@ class DashboardViewModel extends BaseViewModel {
     sp = await SharedPreferences.getInstance();
     _userID = sp.getString(AppConstants.userID);
     _firstName = sp.getString(AppConstants.firstName);
+    _role = sp.getString(AppConstants.role);
+    if (_role != null && _role!.startsWith('emp')) {
+      updateIndex(2);
+    } else if (_role != null && _role!.startsWith('cand')) {
+      updateIndex(1);
+    } else {
+      updateIndex(0);
+    }
 
     notifyListeners();
   }

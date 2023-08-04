@@ -48,8 +48,8 @@ class JobsViewModel extends BaseViewModel with WidgetsBindingObserver {
 
   List? get isData => data;
   List? get searchResult => _searchResult;
-  List<TaxonomyModel?>? get jobTypes => _jobTypes;
-  List<TaxonomyModel?>? get categories => _categories;
+  List<TaxonomyModel>? get jobTypes => _jobTypes;
+  List<TaxonomyModel>? get categories => _categories;
   List<JobModel> get featuredJobs => _featuredJobs;
   List<JobModel> get unFeaturedJobs => _unFeaturedJobs;
   List<JobModel> get searchFeaturedJobs => _searchFeaturedJobs;

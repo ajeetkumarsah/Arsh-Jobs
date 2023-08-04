@@ -15,13 +15,13 @@ class RegisterCard extends StatelessWidget {
       : super(key: key);
   String? title;
   IconData? icon;
-  Function? onPressed;
+  void Function()? onPressed;
   bool? isPress;
   double elevation;
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onPressed as void Function()?,
+      onTap: onPressed,
       child: Card(
         elevation: elevation,
         color: isPress! ? primary : bg,

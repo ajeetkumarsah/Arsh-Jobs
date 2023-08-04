@@ -1,4 +1,5 @@
 import 'package:cariera/services/login_service.dart';
+import 'package:cariera/utils/constant.dart';
 import 'package:cariera/utils/methods.dart';
 import 'package:cariera/utils/routes.dart';
 import 'package:cariera/views/register_view.dart';
@@ -17,8 +18,17 @@ class LoginViewModel extends BaseViewModel {
   TextEditingController passwordController = TextEditingController();
 
   Future login(String username, String password, context) async {
-    loading('Authenticating..');
     sp = await SharedPreferences.getInstance();
+    final language = sp.getString(AppConstants.LANGUAGE_CODE) ?? '';
+    loading(language.contains('ur')
+        ? 'تصدیق کر رہا ہے...'
+        : language.contains('bn')
+            ? 'প্রমাণীকরণ হচ্ছে...'
+            : language.contains('ar')
+                ? 'مصادقة ...'
+                : language.contains('hi')
+                    ? 'प्रमाणित किया जा रहा है...'
+                    : 'Authenticating..');
 
     var response = await _loginService.login(username, password);
 

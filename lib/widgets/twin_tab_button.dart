@@ -1,4 +1,3 @@
-
 import 'package:cariera/widgets/register_card.dart';
 import 'package:flutter/material.dart';
 

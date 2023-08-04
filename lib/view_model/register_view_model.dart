@@ -33,8 +33,8 @@ class RegisterViewModel extends BaseViewModel {
       String username, String email, String password, String phone) async {
     sp = await SharedPreferences.getInstance();
     loading('Registering..');
-    var response = await _registerService.register(
-        username, email, password, isCandidate ? 'candidate' : 'employer');
+    var response = await _registerService.register(username, email, password,
+        isCandidate ? 'candidate' : 'employer', phone);
     if (response.containsKey('error')) {
       dismissLoading();
       Method.showToast(response['error']);

@@ -1,3 +1,7 @@
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:cariera/controller/app_controller.dart';
 import 'package:cariera/models/job_model.dart';
 import 'package:cariera/utils/colors.dart';
 import 'package:cariera/utils/constant.dart';
@@ -21,167 +25,195 @@ import 'package:google_translator/google_translator.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:stacked/stacked.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:http/http.dart' as http;
 import '../widgets/big_rounded_button.dart';
 
 // ignore: must_be_immutable
-class DetailsView extends StatelessWidget {
+class DetailsView extends StatefulWidget {
   DetailsView({Key? key, this.job, this.type}) : super(key: key);
   JobModel? job;
   String? type;
 
   @override
+  State<DetailsView> createState() => _DetailsViewState();
+}
+
+class _DetailsViewState extends State<DetailsView> {
+  final GoogleTranslationService translationService =
+      GoogleTranslationService(AppConstants.googleApiKey);
+
+  // Stream controller to emit translated text
+  final StreamController<String> _translatedTextController =
+      StreamController<String>();
+  String _translatedText = '';
+  @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder.reactive(
-        viewModelBuilder: () => DetailsViewModel(),
-        builder: (context, dynamic model, child) {
-          return Scaffold(
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
-            floatingActionButton: type == 'resume' || type == 'company'
-                ? Row(
-                    children: [
-                      if ((job!.resumeEmail != null &&
-                              job!.resumeEmail != '') ||
-                          (job!.companyEmail != null &&
-                              job!.companyEmail != ''))
-                        BigRoundedButton(
-                          onPress: () async {
-                            if (job!.resumeEmail != null &&
-                                job!.resumeEmail != '' &&
-                                type == 'resume') {
-                              // ignore: deprecated_member_use
-                              if (!await launch('mailto:${job!.resumeEmail}')) {
-                                throw 'Could not launch ${job!.resumeEmail}';
-                              }
-                            } else if (job!.companyEmail != null &&
-                                job!.companyEmail != '' &&
-                                type == 'company') {
-                              // ignore: deprecated_member_use
-                              if (!await launch(
-                                  'mailto:${job!.companyEmail}')) {
-                                throw 'Could not launch ${job!.companyEmail}';
-                              }
+    return GetBuilder<AppController>(
+      init: AppController(sharedPreferences: Get.find()),
+      builder: (ctlr) {
+        return ViewModelBuilder.reactive(
+            viewModelBuilder: () => DetailsViewModel(),
+            onViewModelReady: (d) {
+              if (isFirst) {
+                translatelang(widget.job?.content ?? '',
+                    lngCode: ctlr.locale.languageCode);
+              }
+            },
+            builder: (context, dynamic model, child) {
+              return Scaffold(
+                floatingActionButtonLocation:
+                    FloatingActionButtonLocation.centerFloat,
+                floatingActionButton: widget.type == 'resume' ||
+                        widget.type == 'company'
+                    ? Row(
+                        children: [
+                          if ((widget.job!.resumeEmail != null &&
+                                  widget.job!.resumeEmail != '') ||
+                              (widget.job!.companyEmail != null &&
+                                  widget.job!.companyEmail != ''))
+                            BigRoundedButton(
+                              onPress: () async {
+                                if (widget.job!.resumeEmail != null &&
+                                    widget.job!.resumeEmail != '' &&
+                                    widget.type == 'resume') {
+                                  // ignore: deprecated_member_use
+                                  if (!await launch(
+                                      'mailto:${widget.job!.resumeEmail}')) {
+                                    throw 'Could not launch ${widget.job!.resumeEmail}';
+                                  }
+                                } else if (widget.job!.companyEmail != null &&
+                                    widget.job!.companyEmail != '' &&
+                                    widget.type == 'company') {
+                                  // ignore: deprecated_member_use
+                                  if (!await launch(
+                                      'mailto:${widget.job!.companyEmail}')) {
+                                    throw 'Could not launch ${widget.job!.companyEmail}';
+                                  }
+                                }
+                              },
+                              title: 'Contact Us',
+                              radius: defualtRadius,
+                            ),
+                        ],
+                      )
+                    : Container(),
+                backgroundColor: bg,
+                appBar: PreferredSize(
+                    preferredSize:
+                        const Size(double.infinity, defaultAppBarHeight),
+                    child: CustomAppBar(
+                      rightIcon: Icons.share,
+                      rightPress: () async {
+                        Method.share(widget.job!.link);
+                      },
+                    )),
+                body: ListView(
+                  children: [
+                    //LOGO
+                    sbH20(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            if ((widget.type == 'job' || widget.type == null) &&
+                                widget.job!.companyID!.isNotEmpty) {
+                              Get.to(() => CompanyView(
+                                    id: widget.job!.companyID,
+                                  ));
                             }
                           },
-                          title: 'Contact Us',
-                          radius: defualtRadius,
+                          child: RoundedNetworkImage(
+                              image: checkListingLogo(widget.job, widget.type),
+                              defaultImage: AppConstants.defaultCompanyImage,
+                              width: defaultJobDetailImage,
+                              height: defaultJobDetailImage,
+                              radius: defualtRadius),
+                        )
+                      ],
+                    ),
+                    //TITLE
+                    sbH10(),
+
+                    Text(
+                      checkString(widget.job?.title),
+                      textAlign: TextAlign.center,
+                      style: swb20,
+                    ).translate(),
+
+                    //LOCATION
+                    sbH10(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.pin_drop_rounded,
+                          color: primary,
+                          size: 15,
                         ),
-                    ],
-                  )
-                : Container(),
-            backgroundColor: bg,
-            appBar: PreferredSize(
-                preferredSize: const Size(double.infinity, defaultAppBarHeight),
-                child: CustomAppBar(
-                  rightIcon: Icons.share,
-                  rightPress: () async {
-                    Method.share(job!.link);
-                  },
-                )),
-            body: ListView(
-              children: [
-                //LOGO
-                sbH20(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        if ((type == 'job' || type == null) &&
-                            job!.companyID!.isNotEmpty) {
-                          Get.to(() => CompanyView(
-                                id: job!.companyID,
-                              ));
-                        }
-                      },
-                      child: RoundedNetworkImage(
-                          image: checkListingLogo(job, type),
-                          defaultImage: AppConstants.defaultCompanyImage,
-                          width: defaultJobDetailImage,
-                          height: defaultJobDetailImage,
-                          radius: defualtRadius),
-                    )
-                  ],
-                ),
-                //TITLE
-                sbH10(),
-
-                Text(
-                  checkString(job?.title),
-                  textAlign: TextAlign.center,
-                  style: swb20,
-                ).translate(),
-
-                //LOCATION
-                sbH10(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.pin_drop_rounded,
-                      color: primary,
-                      size: 15,
+                        Flexible(
+                          child: Text(
+                            checkString(widget.job?.location),
+                            style: s2,
+                          ).translate(),
+                        )
+                      ],
                     ),
-                    Flexible(
-                      child: Text(
-                        checkString(job?.location),
-                        style: s2,
-                      ).translate(),
-                    )
-                  ],
-                ),
-                //COMPANY INFO
-                sbH10(),
-                if (type == 'job' || type == null)
-                  InkWell(
-                    onTap: () {
-                      if (job!.companyID!.isNotEmpty) {
-                        Get.to(() => CompanyView(
-                              id: job!.companyID,
-                            ));
-                      }
-                    },
-                    child: PadLR(
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: RoundedCard(
-                              pd: 20,
-                              elevation: 0,
-                              color: primary.withOpacity(0.07),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    checkString(job?.companyName) == ''
-                                        ? 'No Company'
-                                        : checkString(job?.companyName),
-                                    style: swp15,
-                                  ).translate(),
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
+                    //COMPANY INFO
+                    sbH10(),
+                    if (widget.type == 'job' || widget.type == null)
+                      InkWell(
+                        onTap: () {
+                          if (widget.job!.companyID!.isNotEmpty) {
+                            Get.to(() => CompanyView(
+                                  id: widget.job!.companyID,
+                                ));
+                          }
+                        },
+                        child: PadLR(
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: RoundedCard(
+                                  pd: 20,
+                                  elevation: 0,
+                                  color: primary.withOpacity(0.07),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        checkString(widget.job?.companyName) ==
+                                                ''
+                                            ? 'No Company'
+                                            : checkString(
+                                                widget.job?.companyName),
+                                        style: swp15,
+                                      ).translate(),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                if (type == 'job' || type == null) sbH20(),
-                info(model, context),
-                if (model.isOverview) mapView(context, model),
-                sbH10(),
-              ],
-            ),
-          );
-        });
+                    if (widget.type == 'job' || widget.type == null) sbH20(),
+                    info(model, context),
+                    if (model.isOverview) mapView(context, model),
+                    sbH10(),
+                  ],
+                ),
+              );
+            });
+      },
+    );
   }
 
   Widget mapView(context, model) {
-    return job!.lat != null && job!.long != null
+    return widget.job!.lat != null && widget.job!.long != null
         ? Container(
             padding: EdgeInsets.only(
-                bottom: type == 'resume' || type == 'company'
+                bottom: widget.type == 'resume' || widget.type == 'company'
                     ? defualtPadding * 3
                     : 0),
             child: RoundedContainer(
@@ -189,11 +221,11 @@ class DetailsView extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 radius: defualtRadius * 1.5,
                 child: GoogleMapScreen(
-                  lat: job?.lat,
-                  long: job?.long,
+                  lat: widget.job?.lat,
+                  long: widget.job?.long,
                   image: null,
-                  title: job?.title,
-                  description: job?.location,
+                  title: widget.job?.title,
+                  description: widget.job?.location,
                 )),
           )
         : Container();
@@ -232,7 +264,7 @@ class DetailsView extends StatelessWidget {
                 Expanded(
                   flex: 1,
                   child: RegisterCard(
-                    title: '${checkType(type)} Overview',
+                    title: '${checkType(widget.type)} Overview',
                     elevation: 0,
                     isPress: model.isOverview,
                     onPressed: () {
@@ -246,8 +278,8 @@ class DetailsView extends StatelessWidget {
           sbH20(),
           if (model.isOverview)
             OverView(
-              type: type,
-              job: job,
+              type: widget.type,
+              job: widget.job,
             ),
           if (model.isDescription) description(model),
         ],
@@ -258,22 +290,83 @@ class DetailsView extends StatelessWidget {
   Widget description(model) {
     return Container(
       padding: EdgeInsets.only(
-          bottom:
-              type == 'resume' || type == 'company' ? defualtPadding * 3 : 0),
-      child: Html(
-        style: {
-          'html': Style(textAlign: TextAlign.justify),
-        },
-        data: checkString(job!.content),
-        onLinkTap: (String? url, RenderContext context,
-            Map<String, String> attributes, dom.Element? element) async {
-          //open URL in webview, or launch URL in browser, or any other logic here
-          final Uri _url = Uri.parse(url ?? '');
-          if (!await launchUrl(_url)) {
-            throw Exception('Could not launch $_url');
-          }
-        },
-      ),
+          bottom: widget.type == 'resume' || widget.type == 'company'
+              ? defualtPadding * 3
+              : 0),
+      child: _translatedText.isNotEmpty
+          ? Expanded(
+              child: SingleChildScrollView(
+                child: Html(
+                  style: {
+                    'html': Style(textAlign: TextAlign.justify),
+                  },
+                  data: checkString(_translatedText), //job.content
+                  onLinkTap: (String? url,
+                      RenderContext context,
+                      Map<String, String> attributes,
+                      dom.Element? element) async {
+                    //open URL in webview, or launch URL in browser, or any other logic here
+                    final Uri _url = Uri.parse(url ?? '');
+                    if (!await launchUrl(_url)) {
+                      throw Exception('Could not launch $_url');
+                    }
+                  },
+                ),
+              ),
+            )
+          : const SizedBox(),
+
+      // StreamBuilder<String>(
+      //   stream: _translatedTextController.stream,
+      //   builder: (context, snapshot) {
+      //     if (snapshot.hasData) {
+      //       return SingleChildScrollView(
+      //         child:
+      //       );
+      //     } else if (snapshot.hasError) {
+      //       return Text('Error: ${snapshot.error}');
+      //     } else {
+      //       return Container(); // Placeholder or loading indicator
+      //     }
+      //   },
+      // ),
     );
+  }
+
+  bool isFirst = true;
+
+  void translatelang(String text, {String lngCode = 'en'}) async {
+    isFirst = false;
+    String translatedText =
+        await translationService.translateText(text, lngCode);
+
+    _translatedTextController.add(translatedText);
+    setState(() {
+      _translatedText = translatedText;
+    });
+  }
+}
+
+class GoogleTranslationService {
+  final String apiKey;
+
+  GoogleTranslationService(this.apiKey);
+
+  Future<String> translateText(String text, String targetLanguage) async {
+    final url =
+        Uri.parse('https://translation.googleapis.com/language/translate/v2');
+    final response = await http.post(url, body: {
+      'key': apiKey,
+      'source': 'en', // Source language code (English)
+      'target': targetLanguage,
+      'q': text,
+    });
+
+    if (response.statusCode == 200) {
+      final decoded = json.decode(response.body);
+      return decoded['data']['translations'][0]['translatedText'];
+    } else {
+      throw Exception('Failed to translate text');
+    }
   }
 }

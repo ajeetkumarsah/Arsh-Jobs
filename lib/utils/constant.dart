@@ -88,7 +88,7 @@ class AppConstants {
   static const String noSalary = '';
 
   //SYMBOLS
-  static const String defaultCurrency = '\$';
+  static const String defaultCurrency = '\u{20B9}';
 
   //SETTING
   static const bool isCurrencyLogoLeft =
@@ -107,6 +107,7 @@ class AppConstants {
   static const String copyright = 'Copyright @ 2022 Gnodesign';
 
   //SHARED PREFERENCE
+  static const String isFirst = 'first_time';
   static const String userID = 'user_id';
   static const String authToken = 'auth_token';
   static const String firstName = 'first_name';
@@ -162,6 +163,16 @@ const dp = 20.0;
 const double ls10 = 10.0;
 
 const double roundedBigButtonHeight = 50.0;
+
+const double PADDING_SIZE_EXTRA_SMALL = 5.0;
+const double PADDING_SIZE_SMALL = 10.0;
+const double PADDING_SIZE_DEFAULT = 15.0;
+const double PADDING_SIZE_LARGE = 20.0;
+const double PADDING_SIZE_EXTRA_LARGE = 25.0;
+const double RADIUS_SMALL = 5.0;
+const double RADIUS_DEFAULT = 10.0;
+const double RADIUS_LARGE = 15.0;
+const double RADIUS_EXTRA_LARGE = 20.0;
 
 //STYLES
 TextStyle grey12 = const TextStyle(color: Colors.grey, fontSize: 12);

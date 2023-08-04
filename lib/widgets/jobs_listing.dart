@@ -1,3 +1,4 @@
+import 'package:cariera/controller/app_controller.dart';
 import 'package:cariera/models/job_model.dart';
 import 'package:cariera/utils/colors.dart';
 import 'package:cariera/utils/constant.dart';
@@ -8,6 +9,7 @@ import 'package:cariera/widgets/shimmer.dart';
 import 'package:cariera/widgets/verticalShimmerList.dart';
 import 'package:cariera/widgets/vertical_list.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_translator/google_translator.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -55,42 +57,69 @@ class JobListing extends StatelessWidget {
   }
 
   Widget lists() {
-    return ListView(
-      children: [
-        PadLR(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Hey, ${model.username}',
-              ).translate(),
-              Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(text: 'Find Your ', style: swb20),
-                    TextSpan(
-                        text: 'Perfect ${checkPerfect(type)}', style: swp20)
-                  ],
-                ),
+    return GetBuilder<AppController>(
+      init: AppController(sharedPreferences: Get.find()),
+      builder: (ctlr) {
+        return ListView(
+          children: [
+            PadLR(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Hey, ${model.username}',
+                  ).translate(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Flexible(
+                          child: Text('Find Your ', style: swb20).translate()),
+                      sbW10(),
+                      Flexible(
+                          child: Text('Perfect ${checkPerfect(type)}',
+                                  style: swp20)
+                              .translate())
+                    ],
+                  ),
+                  // Text.rich(
+                  //   TextSpan(
+                  //     children: [
+                  //       TextSpan(text: 'Find Your ', style: swb20),
+                  //       TextSpan(
+                  //           text: 'Perfect ${checkPerfect(type)}', style: swp20)
+                  //     ],
+                  //   ),
+                  // ),
+                  sbH10(),
+                  searchFilterField(
+                    controller: model.searchQueryController,
+                    onTap: () {
+                      model.searchQueryController.clear();
+                      model.isFiltered(true);
+                    },
+                    hint: ctlr.locale.languageCode.startsWith('ar')
+                        ? 'يبحث'
+                        : ctlr.locale.languageCode.startsWith('hi')
+                            ? 'खोज'
+                            : ctlr.locale.languageCode.startsWith('bn')
+                                ? 'অনুসন্ধান করুন'
+                                : ctlr.locale.languageCode.startsWith('ur')
+                                    ? 'تلاش کریں۔'
+                                    : ctlr.locale.languageCode.startsWith('mr')
+                                        ? 'शोधा'
+                                        : 'Search',
+                    obscureText: false,
+                    sufix: Icons.search,
+                    type: TextInputType.text,
+                  ),
+                  sbH20()
+                ],
               ),
-              sbH10(),
-              searchFilterField(
-                controller: model.searchQueryController,
-                onTap: () {
-                  model.searchQueryController.clear();
-                  model.isFiltered(true);
-                },
-                hint: 'Search',
-                obscureText: false,
-                sufix: Icons.search,
-                type: TextInputType.text,
-              ),
-              sbH20()
-            ],
-          ),
-        ),
-        model.isLoading ? shimmer() : listings(),
-      ],
+            ),
+            model.isLoading ? shimmer() : listings(),
+          ],
+        );
+      },
     );
   }
 
